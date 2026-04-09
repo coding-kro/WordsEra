@@ -12,13 +12,18 @@ import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { RouteSignUp } from '@/helpers/RouteName';
-import { Link } from 'react-router-dom';
+import { RouteIndex, RouteSignUp } from '@/helpers/RouteName';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
+import { showToast } from '@/helpers/showToast';
 
 const Signin = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const navigate = useNavigate();
+
   const formSchema = z.object({
-    email: z.string().email('Invalid email address'),
+    email: z.email('Invalid email address'),
     password: z.string().min(6, 'password must be at least 6 character long'),
   });
 
@@ -30,8 +35,25 @@ const Signin = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'post',
+        headers: { 'Content-type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return showToast('error', data.message);
+      }
+      navigate(RouteIndex);
+      showToast('success', data.message);
+    } catch (error) {
+      showToast('error', error.message);
+    }
   }
 
   return (
@@ -52,6 +74,7 @@ const Signin = () => {
                     <FormControl>
                       <Input
                         placeholder="Enter your email address"
+                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -71,6 +94,7 @@ const Signin = () => {
                       <Input
                         type="password"
                         placeholder="Enter your password"
+                        autoComplete="current-password"
                         {...field}
                       />
                     </FormControl>
