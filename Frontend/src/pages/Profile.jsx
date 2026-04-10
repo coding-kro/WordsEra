@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,10 +16,27 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { showToast } from '@/helpers/showToast';
 import { setUser } from '@/redux/user/user.slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Textarea } from '@/components/ui/textarea';
+import { useFetch } from '@/hooks/useFetch';
+import Loading from '@/components/Loading';
 
 const Profile = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const user = useSelector((state) => state.user);
+
+  const {
+    data: userData,
+    loading,
+    error,
+  } = useFetch(`${API_URL}/user/get-user/${user.user._id}`, {
+    method: 'get',
+    credentials: 'include',
+  });
+
+  console.log(userData);
+
   const dispatch = useDispatch();
 
   const formSchema = z.object({
@@ -38,6 +55,16 @@ const Profile = () => {
       password: '',
     },
   });
+
+  useEffect(() => {
+    if (userData && userData.success) {
+      form.reset({
+        username: userData.user.username,
+        email: userData.user.email,
+        bio: userData.user.bio,
+      });
+    }
+  }, [userData]);
 
   async function onSubmit(values) {
     try {
@@ -62,12 +89,14 @@ const Profile = () => {
     }
   }
 
+  if (loading) return <Loading />;
+
   return (
     <Card className="max-w-3xl mx-auto">
       <CardContent>
         <div className="flex justify-center items-center mt-10">
           <Avatar className="w-32 h-32">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src={userData?.user?.avatar} />
           </Avatar>
         </div>
         <div>
