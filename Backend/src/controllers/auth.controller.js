@@ -77,7 +77,7 @@ export const loginController = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      newUser,
+      user: newUser,
       message: 'Login successfully',
     });
   } catch (err) {
@@ -134,7 +134,7 @@ export const GoogleLoginController = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      newUser,
+      user: newUser,
       message: 'Login successfully',
     });
   } catch (err) {

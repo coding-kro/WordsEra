@@ -6,9 +6,13 @@ import { auth, provider } from '@/helpers/firebase';
 import { showToast } from '@/helpers/showToast';
 import { useNavigate } from 'react-router-dom';
 import { RouteIndex } from '@/helpers/RouteName';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/redux/user/user.slice';
 
 const GoogleLogin = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -33,6 +37,9 @@ const GoogleLogin = () => {
       if (!response.ok) {
         return showToast('error', data.message);
       }
+
+      dispatch(setUser(data.user));
+
       navigate(RouteIndex);
       showToast('success', data.message);
     } catch (error) {
