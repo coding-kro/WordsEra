@@ -17,6 +17,7 @@ import { SiBlogger } from 'react-icons/si';
 import { FaComments } from 'react-icons/fa';
 import { PiUsersFill } from 'react-icons/pi';
 import { GoDotFill } from 'react-icons/go';
+import { RouteCategoryDetails } from '@/helpers/RouteName';
 
 const AppSidebar = () => {
   return (
@@ -40,7 +41,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <BiSolidCategoryAlt />
-                <Link to="">Categories</Link>
+                <Link to={RouteCategoryDetails}>Categories</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
