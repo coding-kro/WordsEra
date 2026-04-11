@@ -78,15 +78,15 @@ const Topbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar>
-                <AvatarImage src={user.user.avatar || usericon} />
+                <AvatarImage src={user?.user?.avatar || usericon} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuLabel>
-                  <p>{user.user.username}</p>
-                  <p>{user.user.email}</p>
+                  <p>{user?.user?.username}</p>
+                  <p>{user?.user?.email}</p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild className="cursor-pointer">
