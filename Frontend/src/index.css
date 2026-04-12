@@ -4,9 +4,9 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -136,4 +136,13 @@
 
 body {
   font-family: 'Nunito', sans-serif;
+}
+
+/* editer css */
+
+.main-container {
+  width: auto;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }

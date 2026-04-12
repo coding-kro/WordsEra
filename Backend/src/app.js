@@ -5,6 +5,7 @@ import 'dotenv/config';
 import { router as authRoutes } from './routes/auth.routes.js';
 import { router as userRoutes } from './routes/user.routes.js';
 import { router as categoryRoutes } from './routes/category.routes.js';
+import { router as blogRoutes } from './routes/blog.routes.js';
 
 export const app = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
+app.use('/api/blog', blogRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
