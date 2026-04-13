@@ -117,8 +117,8 @@ export const showAllBlogController = async (req, res, next) => {
   try {
     const blog = await blogModel
       .find()
-      .populate('author', 'username')
-      .populate('category', 'name')
+      .populate('author', 'username avatar role')
+      .populate('category', 'name slug')
       .sort({ createdAt: -1 })
       .lean();
 

@@ -24,11 +24,7 @@ const BlogDetails = () => {
 
   const [refreshData, setRefreshData] = useState(false);
 
-  const {
-    data: blogData,
-    loading,
-    error,
-  } = useFetch(
+  const { data: blogData, loading } = useFetch(
     `${API_URL}/blog/get-all`,
     {
       method: 'get',
