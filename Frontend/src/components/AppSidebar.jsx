@@ -18,8 +18,18 @@ import { FaComments } from 'react-icons/fa';
 import { PiUsersFill } from 'react-icons/pi';
 import { GoDotFill } from 'react-icons/go';
 import { RouteBlog, RouteCategoryDetails } from '@/helpers/RouteName';
+import { useFetch } from '@/hooks/useFetch';
 
 const AppSidebar = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const { data: categoryData } = useFetch(`${API_URL}/category/all-category`, {
+    method: 'get',
+    credentials: 'include',
+  });
+
+  // console.log(categoryData);
+
   return (
     <Sidebar>
       <SidebarHeader className="bg-white">
@@ -68,12 +78,15 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <GoDotFill />
-                <Link to="">Category item</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {categoryData && categoryData.category.length > 0 &&
+              categoryData.category.map((category) => (
+                <SidebarMenuItem key={category._id}>
+                  <SidebarMenuButton>
+                    <GoDotFill />
+                    <Link to="">{category.name}</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

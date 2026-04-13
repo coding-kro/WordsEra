@@ -26,12 +26,11 @@ const CategoryDetails = () => {
   const {
     data: categoryData,
     loading,
-    error,
   } = useFetch(
     `${API_URL}/category/all-category`,
     {
       method: 'get',
-      Credential: 'include',
+      credentials: 'include',
     },
     [refreshData],
   );
