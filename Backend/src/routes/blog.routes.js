@@ -5,9 +5,9 @@ import {
   deleteBlogController,
   editBlogControler,
   updateBlogController,
+  getBlogController,
 } from '../controllers/blog.controller.js';
-import upload from '../config/multer.js'
-
+import upload from '../config/multer.js';
 
 export const router = Router();
 
@@ -16,3 +16,4 @@ router.get('/edit/:blogid', editBlogControler);
 router.put('/update/:blogid', upload.single('file'), updateBlogController);
 router.delete('/delete/:blogid', deleteBlogController);
 router.get('/get-all', showAllBlogController);
+router.get('/get-blog/:slug', getBlogController);

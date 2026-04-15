@@ -5,6 +5,7 @@ import {
   RouteAddCategory,
   RouteBlog,
   RouteBlogAdd,
+  RouteBlogDetails,
   RouteBlogEdit,
   RouteCategoryDetails,
   RouteEditCategory,
@@ -23,6 +24,7 @@ import EditCategory from './pages/Category/EditCategory';
 import EditBlog from './pages/Blog/EditBlog';
 import BlogDetails from './pages/Blog/BlogDetails';
 import AddBlog from './pages/Blog/AddBlog';
+import SingleBlogDetails from './pages/SingleBlogDetails';
 
 const App = () => {
   return (
@@ -42,6 +44,7 @@ const App = () => {
           <Route path={RouteBlogAdd} element={<AddBlog />} />
           <Route path={RouteBlog} element={<BlogDetails />} />
           <Route path={RouteBlogEdit()} element={<EditBlog />} />
+          <Route path={RouteBlogDetails()} element={<SingleBlogDetails />} />
         </Route>
         <Route path={RouteSignIn} element={<Signin />} />
         <Route path={RouteSignUp} element={<Signup />} />

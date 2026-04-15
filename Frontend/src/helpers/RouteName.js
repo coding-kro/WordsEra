@@ -29,3 +29,5 @@ export const RouteBlogDetails = (category, blog) => {
     return `/blog/${category}/${blog}`;
   }
 };
+
+

@@ -129,3 +129,23 @@ export const showAllBlogController = async (req, res, next) => {
     next(handleError(500, error.message));
   }
 };
+
+export const getBlogController = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+
+    const blog = await blogModel
+      .findOne({ slug })
+      .populate('author', 'username avatar role')
+      .populate('category', 'name slug');
+    if (!blog) {
+      next(handleError(404, 'Data not found.'));
+    }
+
+    return res.status(200).json({
+      blog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
