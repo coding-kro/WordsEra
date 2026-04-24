@@ -6,14 +6,29 @@ import {
   editBlogControler,
   updateBlogController,
   getBlogController,
+  getRelatedBlogController,
+  getBlogByCategoryController,
+  searchController,
+  getAllBlogsController,
 } from '../controllers/blog.controller.js';
 import upload from '../config/multer.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 export const router = Router();
 
-router.post('/add', upload.single('file'), addBlogController);
-router.get('/edit/:blogid', editBlogControler);
-router.put('/update/:blogid', upload.single('file'), updateBlogController);
-router.delete('/delete/:blogid', deleteBlogController);
-router.get('/get-all', showAllBlogController);
+router.post('/add', authenticate, upload.single('file'), addBlogController);
+router.get('/edit/:blogid', authenticate, editBlogControler);
+router.put(
+  '/update/:blogid',
+  authenticate,
+  upload.single('file'),
+  updateBlogController,
+);
+router.delete('/delete/:blogid', authenticate, deleteBlogController);
+router.get('/get-all', authenticate, showAllBlogController);
+
 router.get('/get-blog/:slug', getBlogController);
+router.get('/get-related-blog/:category/:blog', getRelatedBlogController);
+router.get('/get-blog-category/:category', getBlogByCategoryController);
+router.get('/search', searchController);
+router.get('/blogs', getAllBlogsController);

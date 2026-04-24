@@ -35,7 +35,7 @@ const CategoryDetails = () => {
     [refreshData],
   );
 
-  // console.log(categoryData);
+
 
   const handleDelete = (id) => {
     const response = deleteData(`${API_URL}/category/delete/${id}`);

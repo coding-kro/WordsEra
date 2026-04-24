@@ -25,7 +25,7 @@ export const useFetch = (url, options = {}, dependencies = []) => {
       }
     };
 
-    fetchData(); // ✅ correct place
+    fetchData();
   }, dependencies);
 
   return { data, loading, error };

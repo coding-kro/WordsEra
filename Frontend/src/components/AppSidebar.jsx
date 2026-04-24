@@ -1,7 +1,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -10,80 +9,100 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Link } from 'react-router-dom';
-import logo from '@/assets/hero.png';
-import { IoHome } from 'react-icons/io5';
-import { BiSolidCategoryAlt } from 'react-icons/bi';
-import { SiBlogger } from 'react-icons/si';
-import { FaComments } from 'react-icons/fa';
-import { PiUsersFill } from 'react-icons/pi';
-import { GoDotFill } from 'react-icons/go';
-import { RouteBlog, RouteCategoryDetails } from '@/helpers/RouteName';
+import logo from '@/assets/images/logo-white.png';
+import { IoHomeOutline } from 'react-icons/io5';
+import { BiCategoryAlt } from 'react-icons/bi';
+import { GrBlog } from 'react-icons/gr';
+import { FaRegComments } from 'react-icons/fa6';
+import { LuUsers } from 'react-icons/lu';
+import { GoDot } from 'react-icons/go';
+import {
+  RouteBlog,
+  RouteBlogByCategory,
+  RouteCategoryDetails,
+  RouteCommentDetails,
+  RouteIndex,
+  RouteUser,
+} from '@/helpers/RouteName';
 import { useFetch } from '@/hooks/useFetch';
+import { useSelector } from 'react-redux';
 
 const AppSidebar = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
-
+  const user = useSelector((state) => state.user);
   const { data: categoryData } = useFetch(`${API_URL}/category/all-category`, {
     method: 'get',
     credentials: 'include',
   });
 
-  // console.log(categoryData);
 
   return (
     <Sidebar>
       <SidebarHeader className="bg-white">
-        <img
-          src={logo}
-          style={{ width: '120px', height: '50px', objectFit: 'fill' }}
-          alt="Logo"
-        />
+        <img src={logo} width={120} />
       </SidebarHeader>
       <SidebarContent className="bg-white">
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <IoHome />
-                <Link to="">Home</Link>
+                <IoHomeOutline />
+                <Link to={RouteIndex}>Home</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <BiSolidCategoryAlt />
-                <Link to={RouteCategoryDetails}>Categories</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <SiBlogger />
-                <Link to={RouteBlog}>Blogs</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <FaComments />
-                <Link to="">Comments</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <PiUsersFill />
-                <Link to="">Users</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+
+            {user && user.isLoggedIn ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <GrBlog />
+                    <Link to={RouteBlog}>Blogs</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaRegComments />
+                    <Link to={RouteCommentDetails}>Comments</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
+            {user && user.isLoggedIn && user.user.role === 'admin' ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <BiCategoryAlt />
+                    <Link to={RouteCategoryDetails}>Categories</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <LuUsers />
+                    <Link to={RouteUser}>Users</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
           </SidebarMenu>
         </SidebarGroup>
 
         <SidebarGroup>
           <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarMenu>
-            {categoryData && categoryData.category.length > 0 &&
+            {categoryData &&
+              categoryData.category.length > 0 &&
               categoryData.category.map((category) => (
                 <SidebarMenuItem key={category._id}>
                   <SidebarMenuButton>
-                    <GoDotFill />
-                    <Link to="">{category.name}</Link>
+                    <GoDot />
+                    <Link to={RouteBlogByCategory(category.slug)}>
+                      {category.name}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

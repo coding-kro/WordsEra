@@ -33,7 +33,9 @@ const BlogDetails = () => {
     [refreshData],
   );
 
-  // console.log(categoryData);
+
+
+
 
   const handleDelete = async (id) => {
     const response = deleteData(`${API_URL}/blog/delete/${id}`);
@@ -45,7 +47,7 @@ const BlogDetails = () => {
     }
   };
 
-  // console.log(blogData);
+
 
   if (loading) return <Loading />;
 

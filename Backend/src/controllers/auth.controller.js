@@ -23,6 +23,7 @@ export const registerController = async (req, res, next) => {
       username,
       email,
       password: hashedPassword,
+      role: 'user',
     });
 
     res.status(201).json({
@@ -60,6 +61,7 @@ export const loginController = async (req, res, next) => {
         username: user.username,
         email: user.email,
         avatar: user.avatar,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' },
@@ -117,6 +119,7 @@ export const GoogleLoginController = async (req, res, next) => {
         username: user.username,
         email: user.email,
         avatar: user.avatar,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' },

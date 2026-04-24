@@ -57,7 +57,6 @@ const EditBlog = () => {
     [blogid],
   );
 
-  console.log(blogData);
 
   const formSchema = z.object({
     category: z.string().min(3, 'Category must be at least 5 character long'),
@@ -90,7 +89,7 @@ const EditBlog = () => {
 
   const handleEditorData = (event, editor) => {
     const data = editor.getData();
-    // console.log(data);
+   
     form.setValue('blogContent', data);
   };
 
@@ -104,7 +103,7 @@ const EditBlog = () => {
   }, [blogTitle]);
 
   async function onSubmit(values) {
-    // console.log(values);
+
 
     try {
       const formData = new FormData();
@@ -134,7 +133,7 @@ const EditBlog = () => {
   }
 
   const handleFileSelection = (files) => {
-    // console.log(files);
+  
 
     const file = files[0];
     const preview = URL.createObjectURL(file);

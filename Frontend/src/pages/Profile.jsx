@@ -31,16 +31,13 @@ const Profile = () => {
 
   const user = useSelector((state) => state.user);
 
-  const {
-    data: userData,
-    loading,
-    error,
-  } = useFetch(`${API_URL}/user/get-user/${user?.user?._id}`, {
-    method: 'get',
-    credentials: 'include',
-  });
-
-  // console.log(userData);
+  const { data: userData, loading } = useFetch(
+    `${API_URL}/user/get-user/${user?.user?._id}`,
+    {
+      method: 'get',
+      credentials: 'include',
+    },
+  );
 
   const dispatch = useDispatch();
 
@@ -100,8 +97,6 @@ const Profile = () => {
   }
 
   const handleFileSelection = (files) => {
-    // console.log(files);
-
     const file = files[0];
     const preview = URL.createObjectURL(file);
     setFile(file);

@@ -22,13 +22,8 @@ const EditCategory = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { category_id } = useParams();
-  // console.log(category_id);
 
-  const {
-    data: categoryData,
-    loading,
-    error,
-  } = useFetch(
+  const { data: categoryData } = useFetch(
     `${API_URL}/category/show/${category_id}`,
     {
       method: 'get',
@@ -36,8 +31,6 @@ const EditCategory = () => {
     },
     [category_id],
   );
-
-  // console.log(categoryData);
 
   const formSchema = z.object({
     name: z.string().min(3, 'name must be at least 3 character long'),

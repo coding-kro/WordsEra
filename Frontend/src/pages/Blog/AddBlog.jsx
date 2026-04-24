@@ -69,7 +69,6 @@ const AddBlog = () => {
 
   const handleEditorData = (event, editor) => {
     const data = editor.getData();
-    // console.log(data);
     form.setValue('blogContent', data);
   };
 
@@ -83,7 +82,7 @@ const AddBlog = () => {
   }, [blogTitle]);
 
   async function onSubmit(values) {
-    // console.log(values);
+
 
     try {
       const newValues = { ...values, author: user.user.id };
@@ -119,7 +118,7 @@ const AddBlog = () => {
   }
 
   const handleFileSelection = (files) => {
-    // console.log(files);
+   
 
     const file = files[0];
     const preview = URL.createObjectURL(file);

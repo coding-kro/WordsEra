@@ -25,7 +25,7 @@ export const getUserController = async (req, res, next) => {
 
 export const updateUserController = async (req, res, next) => {
   try {
-    // console.log(req.file);
+  
     const data = JSON.parse(req.body.data);
     const { userId } = req.params;
 
@@ -58,6 +58,31 @@ export const updateUserController = async (req, res, next) => {
       success: true,
       message: 'Data updated',
       user: newUser,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const getAllUserController = async (req, res, next) => {
+  try {
+    const user = await userModel.find().sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const deleteUserController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await userModel.findByIdAndDelete(id);
+    res.status(200).json({
+      success: true,
+      message: 'Data deleted',
     });
   } catch (error) {
     next(handleError(500, error.message));

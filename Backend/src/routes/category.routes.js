@@ -6,11 +6,12 @@ import {
   showCategoryController,
   updateCategoryController,
 } from '../controllers/category.controller.js';
+import { onlyAdmin } from '../middleware/onlyAdmin.js';
 
 export const router = Router();
 
-router.post('/add', addCategoryController);
-router.put('/update/:categoryid', updateCategoryController);
-router.get('/show/:categoryid', showCategoryController);
-router.delete('/delete/:categoryid', deleteCategoryController);
+router.post('/add', onlyAdmin, addCategoryController);
+router.put('/update/:categoryid', onlyAdmin, updateCategoryController);
+router.get('/show/:categoryid', onlyAdmin, showCategoryController);
+router.delete('/delete/:categoryid', onlyAdmin, deleteCategoryController);
 router.get('/all-category', getAllCategoryController);

@@ -2,6 +2,7 @@ import { handleError } from '../helpers/handleError.js';
 import { blogModel } from '../models/blog.model.js';
 import cloudinary from '../config/cloudinary.js';
 import { encode } from 'entities';
+import { categoryModel } from '../models/category.model.js';
 
 export const addBlogController = async (req, res, next) => {
   try {
@@ -115,13 +116,27 @@ export const deleteBlogController = async (req, res, next) => {
 
 export const showAllBlogController = async (req, res, next) => {
   try {
-    const blog = await blogModel
-      .find()
-      .populate('author', 'username avatar role')
-      .populate('category', 'name slug')
-      .sort({ createdAt: -1 })
-      .lean();
+    const user = req.user;
 
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    let blog;
+
+    if (user.role === 'admin') {
+      blog = await blogModel
+        .find({})
+        .populate('author', 'username avatar role')
+        .populate('category', 'name slug')
+        .sort({ createdAt: -1 });
+    } else {
+      blog = await blogModel
+        .find({ author: user.id })
+        .populate('author', 'username avatar role')
+        .populate('category', 'name slug')
+        .sort({ createdAt: -1 });
+    }
     res.status(200).json({
       blog,
     });
@@ -137,12 +152,93 @@ export const getBlogController = async (req, res, next) => {
     const blog = await blogModel
       .findOne({ slug })
       .populate('author', 'username avatar role')
-      .populate('category', 'name slug');
+      .populate('category', 'name slug')
+      .lean()
+      .exec();
     if (!blog) {
       next(handleError(404, 'Data not found.'));
     }
 
     return res.status(200).json({
+      blog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const getRelatedBlogController = async (req, res, next) => {
+  try {
+    const { category, blog } = req.params;
+
+    const categoryData = await categoryModel.findOne({ slug: category });
+    if (!categoryData) {
+      return next(404, 'Category data not found.');
+    }
+    const categoryId = categoryData._id;
+    const relatedBlog = await blogModel.find({
+      category: categoryId,
+      slug: { $ne: blog },
+    });
+    res.status(200).json({
+      relatedBlog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const getBlogByCategoryController = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+
+    const categoryData = await categoryModel.findOne({ slug: category });
+    if (!categoryData) {
+      return next(404, 'Category data not found.');
+    }
+    const categoryId = categoryData._id;
+    const blog = await blogModel
+      .find({ category: categoryId })
+      .populate('author', 'username avatar role')
+      .populate('category', 'name slug')
+      .lean()
+      .exec();
+    res.status(200).json({
+      blog,
+      categoryData,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const searchController = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+
+    const blog = await blogModel
+      .find({ title: { $regex: q, $options: 'i' } })
+      .populate('author', 'username avatar role')
+      .populate('category', 'name slug')
+      .lean()
+      .exec();
+    res.status(200).json({
+      blog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const getAllBlogsController = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const blog = await blogModel
+      .find()
+      .populate('author', 'username avatar role')
+      .populate('category', 'name slug')
+      .sort({ createdAt: -1 });
+    res.status(200).json({
       blog,
     });
   } catch (error) {

@@ -7,6 +7,7 @@ import { router as userRoutes } from './routes/user.routes.js';
 import { router as categoryRoutes } from './routes/category.routes.js';
 import { router as blogRoutes } from './routes/blog.routes.js';
 import { router as commentRoutes } from './routes/comment.routes.js';
+import { router as blogLikeRoutes } from './routes/blogLike.routes.js';
 
 export const app = express();
 
@@ -31,6 +32,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/comment', commentRoutes);
+app.use('/api/blog-like', blogLikeRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

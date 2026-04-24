@@ -12,25 +12,23 @@ import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Card } from '@/components/ui/card';
 import { RouteIndex, RouteSignUp } from '@/helpers/RouteName';
 import { Link, useNavigate } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
 import { showToast } from '@/helpers/showToast';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/user/user.slice';
 import GoogleLogin from '@/components/GoogleLogin';
-
-
-const Signin = () => {
+import logo from '@/assets/images/logo-white.png';
+const SignIn = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const dispatch = useDispatch();
+  const dispath = useDispatch();
 
   const navigate = useNavigate();
-
   const formSchema = z.object({
-    email: z.email('Invalid email address'),
-    password: z.string().min(6, 'password must be at least 6 character long'),
+    email: z.email(),
+    password: z.string().min(3, 'Password field required.'),
   });
 
   const form = useForm({
@@ -49,15 +47,11 @@ const Signin = () => {
         credentials: 'include',
         body: JSON.stringify(values),
       });
-
       const data = await response.json();
-
       if (!response.ok) {
         return showToast('error', data.message);
       }
-
-      dispatch(setUser(data.user));
-
+      dispath(setUser(data.user));
       navigate(RouteIndex);
       showToast('success', data.message);
     } catch (error) {
@@ -68,11 +62,15 @@ const Signin = () => {
   return (
     <div className="flex justify-center items-center h-screen w-screen">
       <Card className="w-100 p-5">
+        <div className="flex justify-center items-center mb-2">
+          <Link to={RouteIndex}>
+            <img src={logo} />
+          </Link>
+        </div>
         <h1 className="text-2xl font-bold text-center mb-5">
           Login Into Account
         </h1>
-
-        <div>
+        <div className="">
           <GoogleLogin />
           <div className="border my-5 flex justify-center items-center">
             <span className="absolute bg-white text-sm">Or</span>
@@ -91,7 +89,6 @@ const Signin = () => {
                     <FormControl>
                       <Input
                         placeholder="Enter your email address"
-                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -111,7 +108,6 @@ const Signin = () => {
                       <Input
                         type="password"
                         placeholder="Enter your password"
-                        autoComplete="current-password"
                         {...field}
                       />
                     </FormControl>
@@ -142,4 +138,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default SignIn;

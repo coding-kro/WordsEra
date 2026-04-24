@@ -1,0 +1,18 @@
+import jwt from 'jsonwebtoken';
+export const onlyAdmin = async (req, res, next) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return next(403, 'Unauthorized');
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.role === 'admin') {
+      req.user = decoded;
+      next();
+    } else {
+      return next(403, 'Unauthorized');
+    }
+  } catch (error) {
+    next(500, error.message);
+  }
+};

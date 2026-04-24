@@ -1,9 +1,9 @@
 import Comment from '@/components/Comment';
 import CommentCount from '@/components/CommentCount';
 // import CommentList from '@/components/CommentList';
-// import LikeCount from '@/components/LikeCount';
+import LikeCount from '@/components/LikeCount';
 import Loading from '@/components/Loading';
-// import RelatedBlog from '@/components/RelatedBlog';
+import RelatedBlog from '@/components/RelatedBlog';
 import { Avatar } from '@/components/ui/avatar';
 import { useFetch } from '@/hooks/useFetch';
 import { AvatarImage } from '@radix-ui/react-avatar';
@@ -46,7 +46,7 @@ const SingleBlogDetails = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center gap-5">
-                {/* <LikeCount props={{ blogid: data.blog._id }} /> */}
+                <LikeCount props={{ blogid: data.blog._id }} />
                 <CommentCount props={{ blogid: data.blog._id }} />
               </div>
             </div>
@@ -66,7 +66,7 @@ const SingleBlogDetails = () => {
         </>
       )}
       <div className="border rounded md:w-[30%] w-full p-5">
-        {/* <RelatedBlog props={{ category: category, currentBlog: blog }} /> */}
+        <RelatedBlog props={{ category: category, currentBlog: blog }} />
       </div>
     </div>
   );

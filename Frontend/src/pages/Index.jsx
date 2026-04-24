@@ -6,7 +6,7 @@ import React from 'react';
 const Index = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const { data: blogData, loading } = useFetch(`${API_URL}/blog/get-all`, {
+  const { data: blogData, loading } = useFetch(`${API_URL}/blog/blogs`, {
     method: 'get',
     credentials: 'include',
   });
@@ -15,7 +15,7 @@ const Index = () => {
   return (
     <div className="grid grid-cols-3 gap-10">
       {blogData && blogData.blog.length > 0 ? (
-        blogData.blog.map((blog) => <BlogCard props={blog} />)
+        blogData.blog.map((blog) => <BlogCard key={blog._id} props={blog} />)
       ) : (
         <div>Data not found.</div>
       )}
