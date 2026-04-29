@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/table';
 import { useFetch } from '@/hooks/useFetch';
 import Loading from '@/components/Loading';
-
 import { IoTrashBinSharp } from 'react-icons/io5';
 import { deleteData } from '@/helpers/handleDelete';
 import { showToast } from '@/helpers/showToast';
@@ -31,10 +30,16 @@ const Comments = () => {
     [refreshData],
   );
 
-
-
   const handleDelete = async (id) => {
+    const isConfirmed = window.confirm('Are you sure to delete this data?');
+
+    if (!isConfirmed) {
+      showToast('info', 'Deletion cancelled');
+      return;
+    }
+
     const response = await deleteData(`${API_URL}/comment/delete/${id}`);
+
     if (response) {
       setRefreshData(!refreshData);
       showToast('success', 'Data deleted');

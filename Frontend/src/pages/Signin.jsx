@@ -19,7 +19,7 @@ import { showToast } from '@/helpers/showToast';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/user/user.slice';
 import GoogleLogin from '@/components/GoogleLogin';
-import logo from '@/assets/images/logo-white.png';
+import logo from '@/assets/images/logo.png';
 const SignIn = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -64,7 +64,7 @@ const SignIn = () => {
       <Card className="w-100 p-5">
         <div className="flex justify-center items-center mb-2">
           <Link to={RouteIndex}>
-            <img src={logo} />
+            <img src={logo} className="w-30" />
           </Link>
         </div>
         <h1 className="text-2xl font-bold text-center mb-5">
@@ -90,6 +90,7 @@ const SignIn = () => {
                       <Input
                         placeholder="Enter your email address"
                         {...field}
+                        autocomplete="email"
                       />
                     </FormControl>
                     <FormMessage />
@@ -109,6 +110,7 @@ const SignIn = () => {
                         type="password"
                         placeholder="Enter your password"
                         {...field}
+                        autocomplete="current-password"
                       />
                     </FormControl>
                     <FormMessage />

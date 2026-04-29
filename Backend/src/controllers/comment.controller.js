@@ -26,7 +26,7 @@ export const getCommentsController = async (req, res, next) => {
     const { blogid } = req.params;
     const comments = await commentModel
       .find({ blogid })
-      .populate('user', 'name avatar')
+      .populate('user', 'username avatar')
       .sort({ createdAt: -1 })
       .lean()
       .exec();
@@ -80,9 +80,17 @@ export const getAllCommentsController = async (req, res, next) => {
 export const deleteCommentController = async (req, res, next) => {
   try {
     const { commentid } = req.params;
-    await commentModel.findByIdAndDelete(commentid);
 
-    res.status(200).json({
+    const deletedComment = await commentModel.findByIdAndDelete(commentid);
+
+    if (!deletedComment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Comment not found',
+      });
+    }
+
+    return res.status(200).json({
       success: true,
       message: 'Data deleted',
     });

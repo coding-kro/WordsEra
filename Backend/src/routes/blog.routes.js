@@ -29,6 +29,6 @@ router.get('/get-all', authenticate, showAllBlogController);
 
 router.get('/get-blog/:slug', getBlogController);
 router.get('/get-related-blog/:category/:blog', getRelatedBlogController);
-router.get('/get-blog-category/:category', getBlogByCategoryController);
+router.get('/get-blog-by-category/:category', getBlogByCategoryController);
 router.get('/search', searchController);
 router.get('/blogs', getAllBlogsController);

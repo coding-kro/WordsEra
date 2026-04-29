@@ -36,16 +36,23 @@ const CategoryDetails = () => {
   );
 
 
-
-  const handleDelete = (id) => {
-    const response = deleteData(`${API_URL}/category/delete/${id}`);
-    if (response) {
-      setRefreshData(!refreshData);
-      showToast('success', 'Data deleted');
-    } else {
-      showToast('error', 'Data not deleted');
-    }
-  };
+  const handleDelete = async (id) => {
+      const isConfirmed = window.confirm('Are you sure to delete this data?');
+  
+      if (!isConfirmed) {
+        showToast('info', 'Deletion cancelled');
+        return;
+      }
+  
+      const response = await deleteData(`${API_URL}/category/delete/${id}`);
+  
+      if (response) {
+        setRefreshData(!refreshData);
+        showToast('success', 'Data deleted');
+      } else {
+        showToast('error', 'Data not deleted');
+      }
+    };
 
   if (loading) return <Loading />;
 

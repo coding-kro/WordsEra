@@ -34,11 +34,16 @@ const BlogDetails = () => {
   );
 
 
-
-
-
   const handleDelete = async (id) => {
-    const response = deleteData(`${API_URL}/blog/delete/${id}`);
+    const isConfirmed = window.confirm('Are you sure to delete this data?');
+
+    if (!isConfirmed) {
+      showToast('info', 'Deletion cancelled');
+      return;
+    }
+
+    const response = await deleteData(`${API_URL}/blog/delete/${id}`);
+
     if (response) {
       setRefreshData(!refreshData);
       showToast('success', 'Data deleted');
@@ -46,8 +51,6 @@ const BlogDetails = () => {
       showToast('error', 'Data not deleted');
     }
   };
-
-
 
   if (loading) return <Loading />;
 

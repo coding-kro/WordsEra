@@ -31,8 +31,17 @@ const User = () => {
     [refreshData],
   );
 
-  const handleDelete = async (id) => {
+
+const handleDelete = async (id) => {
+    const isConfirmed = window.confirm('Are you sure to delete this data?');
+
+    if (!isConfirmed) {
+      showToast('info', 'Deletion cancelled');
+      return;
+    }
+
     const response = await deleteData(`${API_URL}/user/delete/${id}`);
+
     if (response) {
       setRefreshData(!refreshData);
       showToast('success', 'Data deleted');
@@ -40,6 +49,7 @@ const User = () => {
       showToast('error', 'Data not deleted');
     }
   };
+
 
   if (loading) return <Loading />;
 

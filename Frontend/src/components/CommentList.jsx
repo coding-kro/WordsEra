@@ -14,6 +14,8 @@ const CommentList = ({ props }) => {
     credentials: 'include',
   });
 
+
+
   if (loading) return <div>Loading...</div>;
   return (
     <div>
@@ -28,12 +30,12 @@ const CommentList = ({ props }) => {
       <div className="mt-5">
         {props.newComment && (
           <div className="flex gap-2 mb-3">
-            <Avatar>
+            <Avatar className="rounded-full overflow-hidden">
               <AvatarImage src={user?.user?.avatar || usericon} />
             </Avatar>
 
             <div>
-              <p className="font-bold">{user?.user.name}</p>
+              <p className="font-bold">{user?.user.username}</p>
               <p>{moment(props.newComment?.createdAt).format('DD-MM-YYYY')}</p>
               <div className="pt-3">{props.newComment?.comment}</div>
             </div>
@@ -50,7 +52,7 @@ const CommentList = ({ props }) => {
                 </Avatar>
 
                 <div>
-                  <p className="font-bold">{comment?.user.name}</p>
+                  <p className="font-bold">{comment?.user.username}</p>
                   <p>{moment(comment?.createdAt).format('DD-MM-YYYY')}</p>
                   <div className="pt-3">{comment?.comment}</div>
                 </div>

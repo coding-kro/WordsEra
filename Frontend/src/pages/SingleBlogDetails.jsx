@@ -1,6 +1,5 @@
 import Comment from '@/components/Comment';
 import CommentCount from '@/components/CommentCount';
-// import CommentList from '@/components/CommentList';
 import LikeCount from '@/components/LikeCount';
 import Loading from '@/components/Loading';
 import RelatedBlog from '@/components/RelatedBlog';
@@ -11,6 +10,7 @@ import { decode } from 'entities';
 import moment from 'moment';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import usericon from '@/assets/images/user.png';
 
 const SingleBlogDetails = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
@@ -36,7 +36,7 @@ const SingleBlogDetails = () => {
             <div className="flex justify-between items-center">
               <div className="flex justify-between items-center gap-5">
                 <Avatar className="overflow-hidden">
-                  <AvatarImage src={data.blog.author.avatar} />
+                  <AvatarImage src={data.blog.author.avatar || usericon} />
                 </Avatar>
                 <div>
                   <p className="font-bold">{data.blog.author.username}</p>

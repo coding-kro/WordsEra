@@ -257,7 +257,7 @@ const EditBlog = () => {
                 />
               </div>
               <Button type="submit" className="w-full">
-                Save
+                Update
               </Button>
             </form>
           </Form>
