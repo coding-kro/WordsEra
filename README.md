@@ -18,6 +18,27 @@ The application connects a React-based frontend with a Node.js and Express.js ba
 
 It demonstrates how frontend and backend technologies work together to build a complete web application.
 
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td width="50%">
+      <img width="1522" height="742" alt="image" src="https://github.com/user-attachments/assets/d4f8c03e-b942-4526-b5eb-8570eddad6ca" width="100%"  />
+    </td>
+    <td width="50%">
+      <img width="1516" height="742" alt="image" src="https://github.com/user-attachments/assets/ed0bc1e8-a327-40e4-93b4-b84734c8847b" width="100%"  />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+     <img width="1522" height="746" alt="image" src="https://github.com/user-attachments/assets/41458a08-648d-4223-9032-9838808cf391" width="100%"  />
+    </td>
+    <td width="50%">
+      <img width="1516" height="782" alt="image" src="https://github.com/user-attachments/assets/623bfa1a-ce15-412b-934d-76c37fdb3559" width="100%"  />
+    </td>
+  </tr>
+</table>
+
 ## ✨ Key Features
 
 - **Blog Creation:** Create and publish blog posts.
